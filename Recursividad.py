@@ -103,17 +103,28 @@ def listadelista(lista):
 def contar(lista):
     if(len(lista)<=0):
         return 0
-    for i in lista:
-        if i[0] == 'J' or  i[0] == 'K' or  i[0] == 'Q':
-            return 10+contar(lista[1:])
-        elif i[0] == 'A':
-            if(contar(lista[1:])+11>=21 or contar(lista[1:])+11<=21):
-                return contar(lista[1:])+11
+    if(contador(lista)>11):
+        return contador(lista)
+    else:
+        for i in lista:
+            if i[0] == 'J' or  i[0] == 'K' or  i[0] == 'Q':
+                return 10+contar(lista[1:])
+            elif i[0] == 'A':            
+                return contador(lista)+10
             else:
-                return contar(lista[1:])+1
-        else:
-            return i[0]+contar(lista[1:])
-        
-lista = [[5,4],[20,5],['A',5],[1,5]]
-print (contar(lista))
+                return i[0]+contar(lista[1:])
 
+def contador(lista):
+    if(len(lista)==0):
+        return 0
+    else:
+        for i in lista:
+            if(i[0]=='J' or i[0]=='Q' or i[0]=='K'):
+                return contador(lista[1:])+10
+            if(i[0]=='A'):
+                return contador(lista[1:])+1
+            else:
+                return contador(lista[1:])+i[0]
+
+lista = [['A',"Diamantes"],['A',"Bastos"],['A',"Picos"],['A',"Picos"],['A',"Picos"]]
+print (contar(lista))
