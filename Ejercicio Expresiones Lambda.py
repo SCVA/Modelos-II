@@ -1,18 +1,19 @@
 from functools import reduce
 def infoMatriz(matriz):
+
     
-    apuestas= [list(filter(lambda i: i!=True and i!=False, i)) for i in matriz]
-    gananciasBool= [list(filter(lambda i: i==True or i==False, i)) for i in matriz]
-    promedio= [ reduce(lambda x,y: x+y, i)/len(i) for i in apuestas]
+    apuestas= list(map(lambda i: list(filter(lambda x: x!=True and x!=False, i)),matriz))
+    gananciasBool= list(map(lambda i: list(filter(lambda x: x==True or x==False, i)),matriz))
+    promedio= list(map(lambda i:reduce(lambda x,y: x+y, i)/len(i), apuestas))
     promedioTotal= reduce(lambda x,y: x+y, promedio)/len(promedio) 
 
     g = list( map(lambda i,j: list(map(lambda a,b: a if (b) else 0, i, j)), apuestas, gananciasBool))
-    ganancias= [reduce(lambda x,y: x+y, i) for i in g]
+    ganancias= list(map(lambda i: reduce(lambda x,y: x+y, i), g))
 
     mayorGanancia= max(ganancias)
 
     p=list( map(lambda i,j: list(map(lambda a,b: a if (not b) else 0, i, j)), apuestas, gananciasBool))
-    perdidas= [reduce(lambda x,y: x+y, i) for i in p]
+    perdidas= list(map(lambda i: reduce(lambda x,y: x+y, i),p))
 
     mayorPerdida= max(perdidas)
 
